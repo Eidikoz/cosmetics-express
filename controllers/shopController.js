@@ -1,35 +1,12 @@
-const fs = require("fs");
-const path = require("path");
-const uuidv4 = require("uuid");
-const { promisify } = require("util");
-const writeFileAsync = promisify(fs.writeFile);
-const { validationResult } = require("express-validator");
-
 const Shop = require("../models/shop");
+const { validationResult } = require("express-validator");
 const Product = require("../models/product");
 const config = require("../config");
 
 exports.index = async (req, res, next) => {
-  try {
-    const shops = await Shop.find()
-      .select("name photo location")
-      .sort({ _id: -1 });
+  const staffResult = await staffs.find().sort({_id:-1});
 
-    const shopWithPhotoDomain = shops.map((shop, index) => {
-      return {
-        id: shop._id,
-        name: shop.name,
-        photo: `${config.DOMAIN}/images/${shop.photo}`,
-        location: shop.location,
-      };
-    });
-
-    res.status(200).json({
-      data: shopWithPhotoDomain,
-    });
-  } catch (error) {
-    next(error);
-  }
+  return res.status(200).json({ data: staffResult });
 };
 
 exports.product = async (req, res, next) => {
@@ -46,11 +23,12 @@ exports.product = async (req, res, next) => {
 
 exports.show = async (req, res, next) => {
   try {
-    const shop = await Shop.findById(req.params.id).populate("menus");
-
-    res.status(200).json({
-      data: shop,
-    });
+    const {id} = req.params;
+    const result = await shops.findOne({_id: id}).populate('product');
+    if(!result){
+      throw new Error('Shop not found');
+    }
+    return res.status(200).json({ data: result });
   } catch (error) {
     next(error);
   }
@@ -83,45 +61,3 @@ exports.insert = async (req, res, next) => {
     next(error);
   }
 };
-
-async function saveImageToDisk(baseImage) {
-  //หา path จริงของโปรเจค
-  const projectPath = path.resolve("./");
-  //โฟลเดอร์และ path ของการอัปโหลด
-  const uploadPath = `${projectPath}/public/images/`;
-
-  //หานามสกุลไฟล์
-  const ext = baseImage.substring(
-    baseImage.indexOf("/") + 1,
-    baseImage.indexOf(";base64")
-  );
-
-  //สุ่มชื่อไฟล์ใหม่ พร้อมนามสกุล
-  let filename = "";
-  if (ext === "svg+xml") {
-    filename = `${uuidv4.v4()}.svg`;
-  } else {
-    filename = `${uuidv4.v4()}.${ext}`;
-  }
-
-  //Extract base64 data ออกมา
-  let image = decodeBase64Image(baseImage);
-
-  //เขียนไฟล์ไปไว้ที่ path
-  await writeFileAsync(uploadPath + filename, image.data, "base64");
-  //return ชื่อไฟล์ใหม่ออกไป
-  return filename;
-}
-
-function decodeBase64Image(base64Str) {
-  const matches = base64Str.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-  const image = {};
-  if (!matches || matches.length !== 3) {
-    throw new Error("Invalid base64 string");
-  }
-
-  image.type = matches[1];
-  image.data = matches[2];
-
-  return image;
-}
