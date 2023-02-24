@@ -3,19 +3,6 @@ const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 
-// exports.get = async (req, res, next) => {
-//   try {
-//     const userResult = await User.find().sort({_id:-1});
-//     const userA = userResult.map((user, index) => {
-//       return {
-//         name: user.name
-//       };
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 exports.register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
@@ -23,7 +10,7 @@ exports.register = async (req, res, next) => {
     // validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      const error = new Error("ข้อมูลที่ได้รับมาไม่ถูกต้อง");
+      const error = new Error("Wrong data");
       error.statusCode = 422;
       error.validation = errors.array();
       throw error;
@@ -31,7 +18,7 @@ exports.register = async (req, res, next) => {
 
     const existEmail = await User.findOne({ email: email });
     if (existEmail) {
-      const error = new Error("อีเมลนี้มีผู้ใช้งานในระบบแล้ว");
+      const error = new Error("This email has been used");
       error.statusCode = 400;
       throw error;
     }
@@ -44,7 +31,7 @@ exports.register = async (req, res, next) => {
     await user.save();
 
     res.status(201).json({
-      message: "เพิ่มข้อมูลเรียบร้อยแล้ว",
+      message: "Add successfully",
     });
   } catch (error) {
     next(error);
@@ -58,7 +45,7 @@ exports.login = async (req, res, next) => {
     // validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      const error = new Error("ข้อมูลที่ได้รับมาไม่ถูกต้อง");
+      const error = new Error("Wrong data");
       error.statusCode = 422;
       error.validation = errors.array();
       throw error;
@@ -67,14 +54,14 @@ exports.login = async (req, res, next) => {
     // check email isExist
     const user = await User.findOne({ email: email });
     if (!user) {
-      const error = new Error("ไม่พบผู้ใช้งาน");
+      const error = new Error("User not found");
       error.statusCode = 404;
       throw error;
     }
 
     const isValid = await user.checkPassword(password);
     if (!isValid) {
-      const error = new Error("รหัสผ่านไม่ถูกต้อง");
+      const error = new Error("Wrong password");
       error.statusCode = 401;
       throw error;
     }

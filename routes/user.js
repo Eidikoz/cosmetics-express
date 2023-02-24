@@ -16,19 +16,19 @@ const checkAdmin = require("../middleware/checkAdmin")
 router.post(
   "/register",
   [
-    body("name").not().isEmpty().withMessage("กรุณาป้อนชื่อ-สกุลด้วย"),
+    body("name").not().isEmpty().withMessage("Please type name and surname"),
     body("email")
       .not()
       .isEmpty()
-      .withMessage("กรุณาป้อนอีเมลด้วย")
+      .withMessage("Please type email")
       .isEmail()
-      .withMessage("รูปแบบอีเมลไม่ถูกต้อง"),
+      .withMessage("Wrong format"),
     body("password")
       .not()
       .isEmpty()
-      .withMessage("กรุณาป้อนรหัสผ่านด้วย")
+      .withMessage("Please type password")
       .isLength({ min: 5 })
-      .withMessage("รหัสผ่านต้องมีอย่างน้อย 5 ตัวอักษร"),
+      .withMessage("need at least 5 characters"),
   ],
   userController.register
 );
@@ -39,15 +39,15 @@ router.post(
     body("email")
       .not()
       .isEmpty()
-      .withMessage("กรุณาป้อนอีเมลด้วย")
+      .withMessage("Please type email")
       .isEmail()
-      .withMessage("รูปแบบอีเมลไม่ถูกต้อง"),
+      .withMessage("Wrong format"),
     body("password")
       .not()
       .isEmpty()
-      .withMessage("กรุณาป้อนรหัสผ่านด้วย")
+      .withMessage("Please type password")
       .isLength({ min: 5 })
-      .withMessage("รหัสผ่านต้องมีอย่างน้อย 5 ตัวอักษร"),
+      .withMessage("Wrong format"),
   ],
   userController.login
 );
