@@ -3,7 +3,9 @@ const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
     name: {type: String, required:true, trim:true},
+    desc: {type: String, required:true, trim:true},
     price: {type: Number},
+    brand: {type: String, required:true, trim:true},
     shop: {type: Schema.Types.ObjectId,ref: 'shops'}
 },{
     toJSON: { virtuals: true},
@@ -13,7 +15,7 @@ const productSchema = new Schema({
 
 productSchema.virtual('price_vat').get(function(){
     return this.price*1.07;
-})
+});
 
 const product = mongoose.model("Products",productSchema);
 
