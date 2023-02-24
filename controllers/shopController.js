@@ -49,6 +49,7 @@ exports.insert = async (req, res, next) => {
     let shop = new Shop({
       name: name,
       website: website,
+      description: website,
     });
     await shop.save();
 

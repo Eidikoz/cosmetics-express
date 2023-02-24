@@ -39,6 +39,10 @@ router.post(
       .withMessage("Please type shop website")
       .isURL()
       .withMessage("Wrong format"),
+    body("description")
+      .not()
+      .isEmpty()
+      .withMessage("Please type shop website"),
       isLogin,isAdmin
   ],
   shopController.insert

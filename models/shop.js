@@ -5,8 +5,7 @@ const shopSchema = new Schema(
   {
     name: { type: String, required: true, trim: true },
     website: { type: String, required: true, trim: true },
-    descriion: { type: String, required: true, trim: true },
-    location: { type: String, required: true, trim: true }
+    description: { type: String, required: true, trim: true }
   },
   { collection: "shops", timestamps: true, toJSON: { virtuals: true } }
 );
