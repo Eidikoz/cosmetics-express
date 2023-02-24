@@ -20,11 +20,36 @@ router.get(
   ],
   userController.show
 );
+router.delete("/:id",[isLogin,isAdmin], userController.delete);
+router.put(
+  "/:id",
+  [
+    body("name")
+      .not()
+      .isEmpty()
+      .withMessage("Please type name"),
+    body("email")
+      .not()
+      .isEmpty()
+      .withMessage("Please type email")
+      .isURL()
+      .withMessage("Wrong format"),
+    body("password")
+      .not()
+      .isEmpty()
+      .withMessage("Please type password")
+      .isLength({ min: 5 })
+      .withMessage("Need at least 5 characters"),
+    isLogin,isAdmin
+  ], userController.delete
+);
 
 router.post(
   "/register",
   [
-    body("name").not().isEmpty().withMessage("Please type name and surname"),
+    body("name").not()
+      .isEmpty()
+      .withMessage("Please type name and surname"),
     body("email")
       .not()
       .isEmpty()
@@ -36,7 +61,7 @@ router.post(
       .isEmpty()
       .withMessage("Please type password")
       .isLength({ min: 5 })
-      .withMessage("need at least 5 characters"),
+      .withMessage("Need at least 5 characters"),
   ],
   userController.register
 );

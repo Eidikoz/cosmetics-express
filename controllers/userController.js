@@ -22,6 +22,32 @@ exports.show = async (req, res, next) => {
   }
 };
 
+exports.delete = async (req,res,next) => {
+  const {id} = req.params
+  const userResult = await User.deleteOne({_id:id});
+
+  return res.status(200).json({message:"Deleted",data: userResult})
+};
+
+exports.update = async (req,res,next) => {
+  try{
+      const {id} = req.params;
+      const {name,website} = req.body;
+      const userResult = await User.findByIdAndUpdate(id,{
+          name: name,
+          website: website
+      });
+      if(!userResult){
+          throw new Error("User not found");
+      }
+      const result = await userResult.save();
+
+      return res.status(200).json({ message:"Updated "+(result!=null) });
+  }catch(error){
+      next(error)
+  }
+};
+
 exports.register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
