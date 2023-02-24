@@ -4,9 +4,9 @@ const Product = require("../models/product");
 const config = require("../config");
 
 exports.index = async (req, res, next) => {
-  const staffResult = await staffs.find().sort({_id:-1});
+  const shopResult = await Shop.find().sort({_id:-1});
 
-  return res.status(200).json({ data: staffResult });
+  return res.status(200).json({ data: shopResult });
 };
 
 exports.product = async (req, res, next) => {
