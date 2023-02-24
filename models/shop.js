@@ -3,9 +3,21 @@ const Schema = mongoose.Schema;
 
 const shopSchema = new Schema(
   {
-    name: { type: String, required: true, trim: true },
-    website: { type: String, required: true, trim: true },
-    description: { type: String, required: true, trim: true }
+    name: { 
+      type: String, 
+      required: true, 
+      trim: true 
+    },
+    website: { 
+      type: String, 
+      required: true, 
+      trim: true 
+    },
+    description: { 
+      type: String, 
+      required: true, 
+      trim: true 
+    }
   },
   { collection: "shops", timestamps: true, toJSON: { virtuals: true } }
 );

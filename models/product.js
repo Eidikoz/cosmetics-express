@@ -2,11 +2,23 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
-    name: {type: String, required:true, trim:true},
-    desc: {type: String, required:true, trim:true},
+    name: {
+      type: String, 
+      required:true, 
+      trim:true
+    },
+    desc: {type: String, 
+      required:true, 
+      trim:true
+    },
     price: {type: Number},
-    brand: {type: String, required:true, trim:true},
-    shop: {type: Schema.Types.ObjectId,ref: 'shops'}
+    brand: {type: String, 
+      required:true, 
+      trim:true
+    },
+    shop: {
+      type: Schema.Types.ObjectId,ref: 'shops'
+    }
 },{
     toJSON: { virtuals: true},
     timestamps: true,
