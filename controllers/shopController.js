@@ -75,12 +75,12 @@ exports.update = async (req,res,next) => {
           name: name,
           website: website
       });
-      if(!staffResult){
+      if(!shopResult){
           throw new Error("shop not found");
       }
       const result = await shopResult.save();
 
-      return res.status(200).json({ message:"Updated: "+(result!=null) });
+      return res.status(200).json({ message:"Updated "+(result!=null) });
   }catch(error){
       next(error)
   }
