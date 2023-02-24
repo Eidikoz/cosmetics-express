@@ -14,7 +14,7 @@ const errorHandle = require("./middleware/errorHandle");
 
 const app = express();
 
-mongoose.connect(config.MONGODB_URL, {
+mongoose.connect(config.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
