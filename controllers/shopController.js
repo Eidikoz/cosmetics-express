@@ -35,7 +35,7 @@ exports.product = async (req, res, next) => {
 
 exports.insert = async (req, res, next) => {
   try {
-    const { name, website } = req.body;
+    const { name, website, description} = req.body;
 
     // validation
     const errors = validationResult(req);
@@ -49,7 +49,7 @@ exports.insert = async (req, res, next) => {
     let shop = new Shop({
       name: name,
       website: website,
-      description: website,
+      description: description,
     });
     await shop.save();
 
