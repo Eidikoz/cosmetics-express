@@ -71,10 +71,11 @@ exports.delete = async (req,res,next) => {
 exports.update = async (req,res,next) => {
   try{
       const {id} = req.params;
-      const {name,website} = req.body;
+      const {name,website,description} = req.body;
       const shopResult = await Shop.findByIdAndUpdate(id,{
           name: name,
-          website: website
+          website: website,
+          description: description
       });
       if(!shopResult){
           throw new Error("shop not found");
