@@ -10,7 +10,16 @@ router.get("/:id", shopController.show);
 router.post(
   "/",
   [
-    body("name").not().isEmpty().withMessage("กรุณาป้อนชื่อร้านค้าด้วย")
+    body("name")
+      .not()
+      .isEmpty()
+      .withMessage("Please type shop name"),
+    body("website")
+      .not()
+      .isEmpty()
+      .withMessage("Please type shop website")
+      .isURL()
+      .withMessage("Wrong format"),
   ],
   shopController.insert
 );

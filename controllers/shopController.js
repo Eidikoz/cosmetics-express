@@ -1,12 +1,24 @@
 const Shop = require("../models/shop");
 const { validationResult } = require("express-validator");
 const Product = require("../models/product");
-const config = require("../config");
 
 exports.index = async (req, res, next) => {
   const shopResult = await Shop.find().sort({_id:-1});
 
   return res.status(200).json({ data: shopResult });
+};
+
+exports.show = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const result = await Shop.findOne({_id: id}).populate('product');
+    if(!result){
+      throw new Error('Shop not found');
+    }
+    return res.status(200).json({ data: result });
+  } catch (error) {
+    next(error);
+  }
 };
 
 exports.product = async (req, res, next) => {
@@ -21,27 +33,14 @@ exports.product = async (req, res, next) => {
   }
 };
 
-exports.show = async (req, res, next) => {
-  try {
-    const {id} = req.params;
-    const result = await shops.findOne({_id: id}).populate('product');
-    if(!result){
-      throw new Error('Shop not found');
-    }
-    return res.status(200).json({ data: result });
-  } catch (error) {
-    next(error);
-  }
-};
-
 exports.insert = async (req, res, next) => {
   try {
-    const { name, location, photo } = req.body;
+    const { name, website } = req.body;
 
     // validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      const error = new Error("ข้อมูลที่ได้รับมาไม่ถูกต้อง");
+      const error = new Error("Wrong data");
       error.statusCode = 422;
       error.validation = errors.array();
       throw error;
@@ -49,15 +48,40 @@ exports.insert = async (req, res, next) => {
 
     let shop = new Shop({
       name: name,
-      location: location,
-      photo: photo && (await saveImageToDisk(photo)),
+      website: website,
     });
     await shop.save();
 
     res.status(201).json({
-      message: "เพิ่มข้อมูลเรียบร้อยแล้ว",
+      message: "Add successfully",
     });
   } catch (error) {
     next(error);
+  }
+};
+
+exports.delete = async (req,res,next) => {
+  const {id} = req.params
+  const shopResult = await Shop.deleteOne({_id:id});
+
+  return res.status(200).json({message:"Deleted",data: shopResult})
+};
+
+exports.update = async (req,res,next) => {
+  try{
+      const {id} = req.params;
+      const {name,website} = req.body;
+      const shopResult = await Shop.findByIdAndUpdate(id,{
+          name: name,
+          website: website
+      });
+      if(!staffResult){
+          throw new Error("shop not found");
+      }
+      const result = await shopResult.save();
+
+      return res.status(200).json({ message:"Updated: "+(result!=null) });
+  }catch(error){
+      next(error)
   }
 };
