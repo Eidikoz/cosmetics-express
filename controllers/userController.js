@@ -3,6 +3,25 @@ const { validationResult } = require("express-validator");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 
+exports.index = async (req, res, next) => {
+  const userResult = await User.find().sort({_id:-1});
+
+  return res.status(200).json({ data: userResult });
+};
+
+exports.show = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const result = await User.findById(id)
+    if(!result){
+      throw new Error('User not found');
+    }
+    return res.status(200).json({ data: result });
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.register = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;

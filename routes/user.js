@@ -2,16 +2,24 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 const { body } = require("express-validator");
-const passportJWT = require("../middleware/passportJWT");
-const checkAdmin = require("../middleware/checkAdmin")
+const {isLogin} = require("../middleware/passportJWT");
+const {isAdmin} = require("../middleware/checkAdmin");
 
-// router.get(
-//   "/", 
-//   [
-//     passportJWT.isLogin, checkAdmin.isAdmin
-//   ],
-//   userController.get
-// );
+router.get(
+  "/register",
+  [
+    isLogin,isAdmin
+  ],
+  userController.index
+);
+
+router.get(
+  "/register",
+  [
+    isLogin,isAdmin
+  ],
+  userController.show
+);
 
 router.post(
   "/register",
@@ -52,6 +60,6 @@ router.post(
   userController.login
 );
 
-router.get("/me", [passportJWT.isLogin], userController.profile);
+router.get("/me", [isLogin], userController.profile);
 
 module.exports = router;
