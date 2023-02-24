@@ -2,12 +2,29 @@ const express = require("express");
 const router = express.Router();
 const shopController = require("../controllers/shopController");
 const { body } = require("express-validator");
+const {isLogin} = require("../middleware/passportJWT");
+const {isAdmin} = require("../middleware/checkAdmin");
 
 router.get("/", shopController.index);
 router.get("/product", shopController.product);
 router.get("/:id", shopController.show);
-router.delete("/:id", shopController.delete);
-router.put("/:id", shopController.update);
+router.delete("/:id",[isLogin,isAdmin], shopController.delete);
+router.put(
+  "/:id",
+  [
+    body("name")
+      .not()
+      .isEmpty()
+      .withMessage("Please type shop name"),
+    body("website")
+      .not()
+      .isEmpty()
+      .withMessage("Please type shop website")
+      .isURL()
+      .withMessage("Wrong format"),
+      isLogin,isAdmin
+  ], shopController.update
+);
 
 router.post(
   "/",
@@ -22,6 +39,7 @@ router.post(
       .withMessage("Please type shop website")
       .isURL()
       .withMessage("Wrong format"),
+      isLogin,isAdmin
   ],
   shopController.insert
 );
