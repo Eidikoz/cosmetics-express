@@ -6,7 +6,7 @@ const {isLogin} = require("../middleware/passportJWT");
 const {isAdmin} = require("../middleware/checkAdmin");
 
 router.get(
-  "/register",
+  "/",
   [
     isLogin,isAdmin
   ],
@@ -14,7 +14,7 @@ router.get(
 );
 
 router.get(
-  "/register",
+  "/:id",
   [
     isLogin,isAdmin
   ],
