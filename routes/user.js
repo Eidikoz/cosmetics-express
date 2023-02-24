@@ -13,13 +13,6 @@ router.get(
   userController.index
 );
 
-router.get(
-  "/:id",
-  [
-    isLogin,isAdmin
-  ],
-  userController.show
-);
 router.delete("/:id",[isLogin,isAdmin], userController.delete);
 router.put(
   "/:id",
