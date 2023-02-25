@@ -6,8 +6,7 @@ const {isLogin} = require("../middleware/passportJWT");
 const {isAdmin} = require("../middleware/checkAdmin");
 
 router.get("/", productController.index);
-router.get("/:bra", productController.brand);
-router.get("/product", productController.product);
+router.get("//:bra", productController.brand);
 router.get("/:id", productController.show);
 router.delete(
     "/:id",
@@ -54,3 +53,5 @@ router.post(
   ],
   productController.insert
 );
+
+module.exports = router;

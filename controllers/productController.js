@@ -89,4 +89,4 @@ exports.brand = async (req,res,next) => {
       } catch (error) {
         next(error);
       }
-}
+};
