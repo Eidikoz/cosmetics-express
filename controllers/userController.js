@@ -87,7 +87,6 @@ exports.login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const error = new Error("Wrong data");
@@ -96,7 +95,6 @@ exports.login = async (req, res, next) => {
       throw error;
     }
 
-    // check email isExist
     const user = await User.findOne({ email: email });
     if (!user) {
       const error = new Error("User not found");
@@ -111,7 +109,6 @@ exports.login = async (req, res, next) => {
       throw error;
     }
 
-    // create token
     const token = await jwt.sign(
       {
         id: user._id,

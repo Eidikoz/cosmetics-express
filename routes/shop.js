@@ -9,6 +9,7 @@ router.get("/", shopController.index);
 router.get("/product", shopController.product);
 router.get("/:id", shopController.show);
 router.delete("/:id",[isLogin,isAdmin], shopController.delete);
+
 router.put(
   "/:id",
   [

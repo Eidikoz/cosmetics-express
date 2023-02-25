@@ -37,7 +37,6 @@ exports.insert = async (req, res, next) => {
   try {
     const { name, website, description} = req.body;
 
-    // validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const error = new Error("Wrong data");

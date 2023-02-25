@@ -14,6 +14,7 @@ router.get(
 );
 
 router.delete("/:id",[isLogin,isAdmin], userController.delete);
+
 router.put(
   "/:id",
   [
