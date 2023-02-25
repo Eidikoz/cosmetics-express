@@ -11,7 +11,7 @@ exports.index = async (req, res, next) => {
 exports.show = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const result = await Shop.findById(id).populate('product');
+    const result = await Shop.findById(id).populate('products');
     if(!result){
       throw new Error('Shop not found');
     }
@@ -23,7 +23,7 @@ exports.show = async (req, res, next) => {
 
 exports.product = async (req, res, next) => {
   try {
-    const product = await Product.find().populate("shop");
+    const product = await Product.find().populate("shops");
 
     res.status(200).json({
       data: product,
