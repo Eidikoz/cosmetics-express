@@ -35,7 +35,7 @@ router.put(
       .isLength({ min: 5 })
       .withMessage("Need at least 5 characters"),
     isLogin,isAdmin
-  ], userController.delete
+  ], userController.update
 );
 
 router.post(
