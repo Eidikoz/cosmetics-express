@@ -90,3 +90,19 @@ exports.brand = async (req,res,next) => {
         next(error);
       }
 };
+
+exports.search = async (req,res,next) => {
+    try {
+        const {sea} = req.params;
+        const seaResult = await Product.find({
+          name: sea,
+        });
+        if(!seaResult){
+            throw new Error("Product not found");
+        }
+        return res.status(200).json({ data: seaResult });
+    
+      } catch (error) {
+        next(error);
+      }
+};

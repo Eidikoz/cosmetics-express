@@ -7,13 +7,9 @@ const {isAdmin} = require("../middleware/checkAdmin");
 
 router.get("/", productController.index);
 router.get("/b/:bra", productController.brand);
+router.get("/s/:sea", productController.search);
 router.get("/:id", productController.show);
-router.delete(
-    "/:id",
-    [
-        isLogin,isAdmin
-    ], productController.delete
-);
+router.delete("/:id",[isLogin,isAdmin], productController.delete);
 
 router.put(
   "/:id",
@@ -22,12 +18,20 @@ router.put(
       .not()
       .isEmpty()
       .withMessage("Please type product name"),
-    body("website")
+    body("price")
       .not()
       .isEmpty()
-      .withMessage("Please type product website")
-      .isURL()
-      .withMessage("Wrong format"),
+      .withMessage("Please type product price")
+      .isNumeric()
+      .withMessage("Price must be numeric"),
+    body("brand")
+      .not()
+      .isEmpty()
+      .withMessage("Please type product brand"),
+    body("shop")
+      .not()
+      .isEmpty()
+      .withMessage("Please type product shop id"),
       isLogin,isAdmin
   ], productController.update
 );
@@ -39,16 +43,20 @@ router.post(
       .not()
       .isEmpty()
       .withMessage("Please type product name"),
-    body("website")
+    body("price")
       .not()
       .isEmpty()
-      .withMessage("Please type product website")
-      .isURL()
-      .withMessage("Wrong format"),
-    body("description")
+      .withMessage("Please type product price")
+      .isNumeric()
+      .withMessage("Price must be numeric"),
+    body("brand")
       .not()
       .isEmpty()
-      .withMessage("Please type product website"),
+      .withMessage("Please type product brand"),
+    body("shop")
+      .not()
+      .isEmpty()
+      .withMessage("Please type product shop id"),
       isLogin,isAdmin
   ],
   productController.insert
