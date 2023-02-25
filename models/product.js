@@ -27,6 +27,6 @@ productSchema.virtual('price_vat').get(function(){
     return this.price*1.07;
 });
 
-const product = mongoose.model("Products",productSchema);
+const product = mongoose.model("products",productSchema);
 
 module.exports = product;
