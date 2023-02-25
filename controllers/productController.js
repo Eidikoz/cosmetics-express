@@ -22,7 +22,7 @@ exports.show = async (req, res, next) => {
 
 exports.insert = async (req, res, next) => {
   try {
-    const { name, website, description} = req.body;
+    const { name, price,brand,shop} = req.body;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -58,11 +58,12 @@ exports.delete = async (req,res,next) => {
 exports.update = async (req,res,next) => {
   try{
       const {id} = req.params;
-      const {name,website,description} = req.body;
+      const {name, price,brand,shop} = req.body;
       const productResult = await Product.findByIdAndUpdate(id,{
-          name: name,
-          website: website,
-          description: description
+        name: name,
+        price: price,
+        brand: brand,
+        shop: shop
       });
       if(!productResult){
           throw new Error("Product not found");
