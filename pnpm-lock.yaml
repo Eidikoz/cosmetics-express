@@ -6,6 +6,7 @@ specifiers:
   debug: ^4.3.4
   dotenv: ^16.0.3
   express: ^4.18.2
+  express-now: ^0.1.1
   express-validator: ^6.14.3
   jsonwebtoken: ^9.0.0
   mongoose: ^6.10.0
@@ -21,6 +22,7 @@ dependencies:
   debug: 4.3.4
   dotenv: 16.0.3
   express: 4.18.2
+  express-now: 0.1.1
   express-validator: 6.15.0
   jsonwebtoken: 9.0.0
   mongoose: 6.10.0
@@ -1181,6 +1183,10 @@ packages:
   /etag/1.8.1:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /express-now/0.1.1:
+    resolution: {integrity: sha512-NvErs5BVoz2C/gFqS9C4G6T4QELt7fwKMnYzBuG5lBfH+UHIzVKPNoh2QUiMacXLzkjhaQ7oNHQNQnZvXDxbvg==}
     dev: false
 
   /express-validator/6.15.0:

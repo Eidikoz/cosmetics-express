@@ -1,5 +1,5 @@
 # Cosmetics Express
-REST API for Cosmetics Shop
+RESTful API for Cosmetics Shop 
 ## Usage
 ### Install
 ```
