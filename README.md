@@ -16,3 +16,5 @@ JWT_SECRET=YOUR_JWT_SECRET
 ```
 pnpm run dev
 ```
+### Documentation
+[API documentation](https://documenter.getpostman.com/view/19511804/2s93CPprhi)
